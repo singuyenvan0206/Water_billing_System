@@ -56,7 +56,7 @@ function test_useradd_missing_fields($username, $password, $name) {
     include 'useradd.php';
     $output = ob_get_clean();
 
-    if (strpos($output, "All fields are required") !== false) {
+    if (strpos($output, "Tất cả các trường đều bắt buộc") !== false) {
         echo "Test add user missing fields: Passed\n";
     } else {
         echo "Test add user missing fields: Failed\n";
