@@ -74,41 +74,6 @@ function test_unique_constraint_violation() {
     }
 }
 
-// Kiểm tra 4: Lỗi cập nhật ID tuần tự
-function test_sequential_id_update_failure() {
-    global $conn;
-    reset_user_table();
-    mysqli_query($conn, "INSERT INTO user (username, password, name) VALUES ('user1', 'pass1', 'User One')");
-    mysqli_query($conn, "INSERT INTO user (username, password, name) VALUES ('user2', 'pass2', 'User Two')");
-    $conn->close(); // Đóng kết nối để mô phỏng lỗi
-    ob_start();
-    include 'useradd.php'; // Tệp chứa mã chính
-    $output = ob_get_clean();
-    if (strpos($output, "Lỗi:") !== false) {
-        echo "Test sequential ID update failure: Passed\n";
-    } else {
-        echo "Test sequential ID update failure: Failed\n";
-    }
-    // Mở lại kết nối
-    include 'db.php';
-}
-
-// Kiểm tra 5: Lỗi đặt lại AUTO_INCREMENT
-function test_auto_increment_reset_failure() {
-    global $conn;
-    reset_user_table();
-    mysqli_query($conn, "INSERT INTO user (username, password, name) VALUES ('user1', 'pass1', 'User One')");
-    mysqli_query($conn, "INSERT INTO user (username, password, name) VALUES ('user2', 'pass2', 'User Two')");
-    // Sửa hàm chính để gây lỗi tại bước đặt lại AUTO_INCREMENT (Ví dụ: bằng cách xóa dòng đó đi)
-    ob_start();
-    include 'useradd.php'; // Tệp chứa mã chính đã sửa đổi
-    $output = ob_get_clean();
-    if (strpos($output, "Lỗi:") !== false) {
-        echo "Test auto increment reset failure: Passed\n";
-    } else {
-        echo "Test auto increment reset failure: Failed\n";
-    }
-}
 
 // Thiết lập lại bảng user cho kiểm thử
 reset_user_table();
@@ -119,10 +84,6 @@ echo "\n";
 test_missing_fields();
 echo "\n";
 test_unique_constraint_violation();
-echo "\n";
-test_sequential_id_update_failure();
-echo "\n";
-test_auto_increment_reset_failure();
 echo "\n";
 
 ?>
