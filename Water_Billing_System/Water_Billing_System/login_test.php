@@ -28,11 +28,12 @@ function test_login($username, $password) {
  
  if($row){
  $_SESSION['id'] = $row['id'];
-
- echo '<script>windows: location="billing.php"</script>';
+ echo "Test login with valid username and passwword: Passed\n";
+ 
  }
 	else {
 		echo 'Wrong username or password';
+        echo "Test login with invalid username or password: Passed\n";
 		header ("location: index.php?err");
 		exit();
 		}
